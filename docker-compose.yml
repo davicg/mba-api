@@ -1,21 +1,18 @@
 version: '3'
 services:
   api:
+    container_name: mba-project-api
     image: mba-project
-    build: .
-    networks:
-      - backend
+    build: ./
     ports:
       - "3000:3000"
     volumes:
-      - ./:/usr/src/app
+      - .:/app
+    links:
+      - mongo
 
-  web-cli:
-    image: mba-project
-    networks:
-      - backend
-    command: sh
-
-networks:
-  backend:
-    driver: bridge
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
